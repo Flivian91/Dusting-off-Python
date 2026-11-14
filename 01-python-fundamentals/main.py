@@ -62,5 +62,32 @@ a = "Hello World"
 
 # txt = "Hello World"
 
-print(bool("Hello"))
-print(bool(20))
+# print(bool("Hello"))
+# print(bool(20))
+
+# Ternary Operator
+# num = 2
+# x = "monday" if num > 3 else "Tuesday"
+
+# print(x)
+
+# num = 50
+
+# x = "fri" if num == 5 else "sat" if num == 6 else "sun" if num == 7 else "Its a weekday"
+# print(x)
+
+# Control Structure.
+
+# age = 18
+
+# if age < 18 :
+#     print("Not allowed to drink alcohol")
+# else:
+#     print("Enjoy the weekend")
+
+# User input in python
+age = int(input("Enter your age:"))
+
+print(type(age))
+
+

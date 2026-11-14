@@ -1,0 +1,10 @@
+Student Performance Calculator
+
+Build a program that:
+1. Asks for a students name.
+2. Collects marks for five subjects.
+3. Calculates the total marks.
+4. Calculates the average.
+5. Determines the grade using conditional statements.
+6. Displays a performance report.
+Extra challenge: Handle invalid marks and prevent scores outside the 0–100 range.
