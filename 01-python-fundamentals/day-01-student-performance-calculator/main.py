@@ -3,7 +3,6 @@ student_name = input("Enter student`s name:")
 if student_name == "":
     print("Student name cannot be null")
     exit()
-# subjects: eng, comp, math, bio, chem
 # Function to perfom validation of all the subjects
 def get_marks(subject):
     try:
@@ -16,7 +15,7 @@ def get_marks(subject):
         print(f"Invalid input for {subject}. Please enter a whole number")
         return None
 
-# Calling function
+# Calling function and 
 eng = get_marks("English")
 comp = get_marks("Computer")
 math = get_marks("Mathematics")
