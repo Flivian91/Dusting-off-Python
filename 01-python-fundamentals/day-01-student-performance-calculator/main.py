@@ -1,6 +1,5 @@
 # Student Perfomance calculator
 student_name = input("Enter student`s name:")
-valid_marks = True
 # subjects: eng, comp, math, bio, chem
 # Function to perfom validation of all the subjects
 def get_marks(subject):
@@ -21,12 +20,15 @@ math = get_marks("Mathematics")
 bio = get_marks("Biology")
 chem = get_marks("Chemistry")
 
+# list
+marks = [eng, comp, math, bio, chem]
+
 # Calculate total marks
-if valid_marks:
+if None not in marks:
     
-    total_marks = eng + comp + math + bio + chem
+    total_marks = sum(marks)
     # Calculate average
-    average_marks = (total_marks/5)
+    average_marks = (total_marks/len(marks))
 
     # Grade determiner logic
     # Grade range 0-39 E,40-49 D,50-59 C,60-69 B,70-100 A
@@ -44,3 +46,4 @@ if valid_marks:
         print("Invalid marks")
 else:
     print("Invalid Marks")
+    
