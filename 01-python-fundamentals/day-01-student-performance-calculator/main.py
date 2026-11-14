@@ -1,5 +1,8 @@
 # Student Perfomance calculator
 student_name = input("Enter student`s name:")
+if student_name == "":
+    print("Student name cannot be null")
+    exit()
 # subjects: eng, comp, math, bio, chem
 # Function to perfom validation of all the subjects
 def get_marks(subject):
@@ -10,7 +13,7 @@ def get_marks(subject):
             return None
         return mark
     except ValueError:
-        print("Please enter a valid number")
+        print(f"Invalid input for {subject}. Please enter a whole number")
         return None
 
 # Calling function
@@ -29,21 +32,27 @@ if None not in marks:
     total_marks = sum(marks)
     # Calculate average
     average_marks = (total_marks/len(marks))
+    highest_mark = max(marks)
+    lowest_mark = min(marks)
+    print("=======Report========")
+    print(f"Total marks: {total_marks}")
+    print(f"Average Mark: {average_marks:.2f}")
+    print(f"Highest Mark: {highest_mark}")
+    print(f"Lowest Mark: {lowest_mark}")
+          
 
     # Grade determiner logic
     # Grade range 0-39 E,40-49 D,50-59 C,60-69 B,70-100 A
     if average_marks >= 70:
-        print(f"{student_name} scored a total of {total_marks} and the average is {average_marks:.2f} A")
+        print(f" Grade: A")
     elif average_marks >= 60:
-        print(f"{student_name} scored a total of {total_marks} and the average is {average_marks:.2f} B")
+        print(f" Grade: B")
     elif average_marks >= 50 :
-        print(f"{student_name} scored a total of {total_marks} and the average is {average_marks:.2f} C")
+        print(f" Grade: C")
     elif average_marks >=40:
-        print(f"{student_name} scored a total of {total_marks} and the average is {average_marks:.2f} D")
-    elif average_marks >=0 and average_marks <= 39 :
-        print(f"{student_name} scored a total of {total_marks} and the average is {average_marks:.2f} E")
+        print(f" Grade: D")
     else:
-        print("Invalid marks")
+        print(f" Grade: E")
 else:
     print("Invalid Marks")
     
