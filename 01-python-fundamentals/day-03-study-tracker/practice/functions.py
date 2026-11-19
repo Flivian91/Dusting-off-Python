@@ -76,3 +76,17 @@ def outer_function():
     print(x)
 # outer_function()
 # print(x)
+
+"""
+Coding challenge
+1. Create a function called greet
+2. Add a parameter called name to the function
+3. Inside the function, print "Hello, " followed by the name parameter
+4. Call the function with the argument "Emil"
+"""
+# Implementation
+def greet(name):
+    print("Hello, " + name)
+
+# calling
+greet("Emil")
