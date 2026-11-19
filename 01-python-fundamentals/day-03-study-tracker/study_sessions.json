@@ -1,0 +1,27 @@
+[
+    {
+        "subject": "Python",
+        "topic": "Functions",
+        "duration": 60
+    },
+    {
+        "subject": "Python",
+        "topic": "String",
+        "duration": 30
+    },
+    {
+        "subject": "Python",
+        "topic": "Operators",
+        "duration": 56
+    },
+    {
+        "subject": "Javascript",
+        "topic": "operators",
+        "duration": 40
+    },
+    {
+        "subject": "Java",
+        "topic": "Strings",
+        "duration": 40
+    }
+]
