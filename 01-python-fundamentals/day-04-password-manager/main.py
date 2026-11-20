@@ -126,6 +126,64 @@ def search_by_website():
 # search_by_website()
 
 #FEATURE - 5 UPDATE AN ACCOUNT
+# Update_single_field function
+def update_single_field(field_name, account, name):
+    updated_website_name = validate_input_str(f"Updated {name}")
+    decide = input(f"Are you sure you want to update {name}?(Y/N): ").lower().strip()
+    if decide in ("y", "yes"):
+        # Modify
+        account[field_name] = updated_website_name
+        print(f"{name} updated successfully")
+    elif decide in ("n", "no"):
+        print("Update Cancled!!")
+    else:
+        print("Please enter Y or N")    
+def update_account_data():
+    print("======UPDATE AN ACCOUNT DETAILS======")
+    try:
+        # a. Get the user account ID
+        account_id = int(input("Enter account ID to be updated: "))
+        if account_id < 0:
+            print("Account ID cannot be less than 1")
+            return None
+        if account_id > len(dummy_accounts):
+            print("Account ID does not exists")
+            return None
+        account =dummy_accounts[account_id - 1]
+        
+        # b. Display the account details to be updated
+        print(
+            f"Website Name: {account['website_name']}\n"
+            f"Website URL: {account['website_url']}\n"
+            f"Username: {account['username']}\n"
+            f"Remarks: {account['remarks']}\n"
+        )
+        # c. Provide selection menu for what to update
+        print("Update Menu")
+        for i, key in enumerate(account.keys(), start=1):
+            print(f"{i}. {key.capitalize()}")
+        update_option = int(input("Choose a field to update: "))
+        if update_option <=0 or update_option > len(account.keys()):
+            print(f"Select update option form 1 to {len(account.keys())}")
+            return None
+        # d. Selection block and its logic
+        if update_option == 1:
+            update_single_field(field_name="website_name", account=account, name="Website Name")
+        elif update_option == 2:
+            update_single_field(field_name="website_url", account=account, name="Website URL")
+        elif update_option == 3:
+            update_single_field(field_name="username", account=account, name="Username")
+        elif update_option == 4:
+            update_single_field(field_name="password", account=account, name="Demo Password")
+        elif update_option == 5:
+            update_single_field(field_name="remarks", account=account, name="Remarks")
+    except ValueError:
+        print("Please enter a whole number as account ID")
+        return None
+    
+# update_account_data()
+    
+
 # Selection Block
 def intial_program():
     while True:
@@ -133,11 +191,11 @@ def intial_program():
         if option == 1:
             add_account()
         elif option == 2:
-            pass
+            view_accounts()
         elif option == 3:
-            pass
+            search_by_website()
         elif option == 4:
-            pass
+            update_account_data()
         elif option == 5:
             pass
         elif option == 6:
@@ -154,5 +212,5 @@ def intial_program():
         elif option == 11:
             break
 # Intialize the program or calling the function
-# intial_program()
+intial_program()
   
