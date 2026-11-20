@@ -29,7 +29,7 @@ dummy_accounts = [
         "website_url": "https://kra.go.ke",
         "username": "A001234567Z",
         "password": "TaxPortal#2026",
-        "category": "Government",
+        "category": "Email",
         "remarks": "Annual tax returns portal"
     },
     {
@@ -111,7 +111,7 @@ def view_accounts():
     print("======VIEW ALL ACCOUNTS======")
     # TODO - Load data from storage
     if not dummy_accounts:
-        print("No Account available right now")
+        print("Account Details does not exists")
         return None
     print(f"No Website Name\tWebsite URL\tUsername\tRemarks")
     for index, account in enumerate(dummy_accounts, start=1):
@@ -165,6 +165,7 @@ def update_account_data():
             f"Website Name: {account['website_name']}\n"
             f"Website URL: {account['website_url']}\n"
             f"Username: {account['username']}\n"
+            f"Username: {account['category']}\n"
             f"Remarks: {account['remarks']}\n"
         )
         # c. Provide selection menu for what to update
@@ -210,6 +211,7 @@ def delete_account():
             f"Website Name: {account['website_name']}\n"
             f"Website URL: {account['website_url']}\n"
             f"Username: {account['username']}\n"
+            f"Username: {account['category']}\n"
             f"Remarks: {account['remarks']}\n"
         )
         decide = input("Are you sure you want to delete this record?(Y/N)").lower().strip()
@@ -242,18 +244,60 @@ def search_by_username():
 # FEATURE -8 ACCOUNT STATISTICS
 def account_statistics():
     print("======ACCOUNT STATISTICS======")
-    # get category numbers
-    counts ={}
+    # Handle empty list
+    if not dummy_accounts:
+        print("Accounts does not exist!!")
+        return
+    # count the number of appearance of a category
+    counts = {}
     for acc in dummy_accounts:
         cat = acc["category"]
         counts[cat] = counts.get(cat, 0) + 1
-    # print(counts)
-    print(f"Total Account: {len(dummy_accounts)}")
-    # Always sort others being last
+    print(f"Total Accounts: {len(dummy_accounts)}")
+    # Show sorted items using lambda and force others being the last
     sorted_counts = sorted(counts.items(), key=lambda x: x[0] == "Other")
     for category, count in sorted_counts:
         print(f"{category}: {count}")
-account_statistics()
+# account_statistics()
+
+# FEATURE 9 -Search by category
+def search_by_category():
+    # get available categories
+    categories = {}
+    for acc in dummy_accounts:
+        cat = acc["category"]
+        categories[cat] = categories.get(cat, 0)
+    print('All categories include')
+    for index, x in enumerate(categories.keys(), start=1):
+        print(f"{index}. {x}")
+    try:
+        category_option = int(input("Choose a category: "))
+        if category_option <= 0 or category_option > len(categories):
+            print(f"Please enter a value from 1 to {len(categories)}")
+            return
+        found = False
+        list_category = list(categories)
+        for x in dummy_accounts:
+            value = x["category"]
+            if list_category[category_option - 1] == value:
+                print(
+                    f"Website Name: {x['website_name']}\n"
+                    f"Website URL: {x['website_url']}\n"
+                    f"Username: {x['username']}\n"
+                    f"Username: {x['category']}\n"
+                    f"Remarks: {x['remarks']}\n"
+                        )
+                found = True
+        if not found:
+            print("No category found")
+            return
+    except ValueError:
+        print(f"Please enter a whole number from 1 to {len(categories)}")
+        return
+# search_by_category()
+
+# FEATURE 9 - SORT ACCOUNTS
+
     
         
         
@@ -273,13 +317,13 @@ def intial_program():
         elif option == 4:
             update_account_data()
         elif option == 5:
-            pass
+            delete_account()
         elif option == 6:
-            pass
+            search_by_username()
         elif option == 7:
-            pass
+            account_statistics()
         elif option == 8:
-            pass
+            search_by_category()
         elif option == 9:
             pass
         elif option == 10:
