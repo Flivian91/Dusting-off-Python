@@ -185,6 +185,7 @@ def update_account_data():
 
 # FEATURE - 6 DELETE AN ACCOUNT
 def delete_account():
+    print("======DELETE AN ACCOUNT======")
     try:
         account_id = int(input("Enter account ID to be deleted: "))
         if account_id <= 0:
@@ -213,7 +214,26 @@ def delete_account():
     except ValueError:
         print("Please enter a whole number as ID number")
         return
-delete_account()
+# delete_account()
+
+# FEATURE -7 SEARCH BY USERNAME
+def search_by_username():
+    print("======SEARCH ACCOUNT BY USERNAME======")
+    username = validate_input_str("Username")
+    found = False
+    for x in dummy_accounts:
+        value = x["username"]
+        if value.lower() == username.lower():
+            print(f"Website Name: {x['website_name']}\nWebsite URL: {x['website_url']}\nUsername: {x['username']}\nRemarks: {x['remarks']}\n")
+            found = True
+    if not found:
+        print("Account with such Username doesnot exists!!")
+            
+# search_by_username()
+# FEATURE -8 ACCOUNT STATISTICS
+def account_statistics():
+    print("======ACCOUNT STATISTICS======")
+    
         
         
 
