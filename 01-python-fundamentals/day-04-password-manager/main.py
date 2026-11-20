@@ -1,4 +1,48 @@
 # Complete Password Manager Prototype
+dummy_accounts = [
+    {
+        "website_name": "GitHub",
+        "website_url": "https://github.com",
+        "username": "dev_kamau",
+        "password": "P@ssw0rd123!",
+        "remarks": "Work repository account"
+    },
+    {
+        "website_name": "GitHub",
+        "website_url": "https://github.com",
+        "username": "dev_kamau",
+        "password": "P@ssw0rd123!",
+        "remarks": "Work repository account"
+    },
+    {
+        "website_name": "Gmail",
+        "website_url": "https://google.com",
+        "username": "wanjiku.m",
+        "password": "MySecretEmail#99",
+        "remarks": "Primary personal email"
+    },
+    {
+        "website_name": "Saf Portal",
+        "website_url": "https://safaricom.co.ke",
+        "username": "0712345678",
+        "password": "SafPass2026$",
+        "remarks": "Fiber internet billing"
+    },
+    {
+        "website_name": "KRA iTax",
+        "website_url": "https://kra.go.ke",
+        "username": "A001234567Z",
+        "password": "TaxPortal#2026",
+        "remarks": "Annual tax returns portal"
+    },
+    {
+        "website_name": "LinkedIn",
+        "website_url": "https://linkedin.com",
+        "username": "brian.otieno@outlook.com",
+        "password": "NetWork@2026!",
+        "remarks": "Professional networking profile"
+    }
+]
 
 # FEATURE 1 - Main Menu
 def main_menu():
@@ -34,6 +78,7 @@ def basic_url_check(url):
 
 #  add account inplementation
 def add_account():
+    print("======ADD A NEW ACCOUNT======")
     website_name = validate_input_str("Website Name")
     website_url = validate_input_str("Website URL(eg 'https://www.mywebsite.com')")
     # basic url check using lambda function
@@ -51,7 +96,36 @@ def add_account():
     # TODO : Append the dict to the list
     # TODO : Store the list in a file
 
+
+# FEATURE 3 - View all Accounts
+def view_accounts():
+    print("======VIEW ALL ACCOUNTS======")
+    # TODO - Load data from storage
+    if not dummy_accounts:
+        print("No Account available right now")
+        return None
+    print(f"No Website Name\tWebsite URL\tUsername\tRemarks")
+    for index, account in enumerate(dummy_accounts, start=1):
+        print(f"{index}. {account['website_name']}\t{account['website_url']}\t{account['username']}\t{account['remarks']}")
     
+# view_accounts()
+
+# FEATURE - 4 Search by Website name
+def search_by_website():
+    print("======SEARCH BY WEBSITE NAME======")
+    website_name = validate_input_str("Website Name")
+    found = False
+    for x in dummy_accounts:
+        value = x['website_name']
+        if value.lower() == website_name.lower():
+            print(f"Website Name: {x['website_name']}\nWebsite URL: {x['website_url']}\nUsername: {x['username']}\nRemarks: {x['remarks']}\n")
+            found = True
+    if not found:
+        print("Account with such website name doesnot exists!!")
+    
+# search_by_website()
+
+#FEATURE - 5 UPDATE AN ACCOUNT
 # Selection Block
 def intial_program():
     while True:
@@ -80,5 +154,5 @@ def intial_program():
         elif option == 11:
             break
 # Intialize the program or calling the function
-intial_program()
+# intial_program()
   
