@@ -5,27 +5,23 @@ dummy_accounts = [
         "website_url": "https://github.com",
         "username": "dev_kamau",
         "password": "P@ssw0rd123!",
-        "remarks": "Work repository account"
-    },
-    {
-        "website_name": "GitHub",
-        "website_url": "https://github.com",
-        "username": "dev_kamau",
-        "password": "P@ssw0rd123!",
+        "category": "Other",
         "remarks": "Work repository account"
     },
     {
         "website_name": "Gmail",
         "website_url": "https://google.com",
-        "username": "wanjiku.m",
+        "username": "wanjiku.m@gmail.com",
         "password": "MySecretEmail#99",
+        "category": "Email",
         "remarks": "Primary personal email"
     },
     {
-        "website_name": "Saf Portal",
+        "website_name": "Safaricom Portal",
         "website_url": "https://safaricom.co.ke",
         "username": "0712345678",
         "password": "SafPass2026$",
+        "category": "Utilities",
         "remarks": "Fiber internet billing"
     },
     {
@@ -33,6 +29,7 @@ dummy_accounts = [
         "website_url": "https://kra.go.ke",
         "username": "A001234567Z",
         "password": "TaxPortal#2026",
+        "category": "Government",
         "remarks": "Annual tax returns portal"
     },
     {
@@ -40,9 +37,11 @@ dummy_accounts = [
         "website_url": "https://linkedin.com",
         "username": "brian.otieno@outlook.com",
         "password": "NetWork@2026!",
+        "category": "Social",
         "remarks": "Professional networking profile"
     }
 ]
+
 
 # FEATURE 1 - Main Menu
 def main_menu():
@@ -89,13 +88,23 @@ def add_account():
     username = validate_input_str("Username")
     #TODO: Make username unique to prevent duplication
     demo_password = validate_input_str("Password")
-    account_category = validate_input_str("Account Category")
+    # account_category = validate_input_str("Account Category")
+    categories = ["Social Media", "Education", "Entertainment", "Other"]
+    print("Available Categories")
+    for i, category in enumerate(categories, start=1):
+        print(f"{i}. {category}")
+    category_option = int(input('Choose account category (1-4): ')) 
+    if category_option <=0 or category_option > len(categories):
+        print(f"Please enter a value more than 1 and less than {len(categories)}")
+        return
+    account_category = categories[category_option - 1]
     remarks = validate_input_str("Remarks")
     
-    user_account_data = {"website_name": website_name, "website_url": website_url, "username": username, "password": demo_password, "account_category": account_category, "remark": remarks}
+    user_account_data = {"website_name": website_name, "website_url": website_url, "username": username, "password": demo_password, "category": account_category, "remark": remarks}
+    print(user_account_data)
     # TODO : Append the dict to the list
     # TODO : Store the list in a file
-
+# add_account()
 
 # FEATURE 3 - View all Accounts
 def view_accounts():
@@ -233,6 +242,18 @@ def search_by_username():
 # FEATURE -8 ACCOUNT STATISTICS
 def account_statistics():
     print("======ACCOUNT STATISTICS======")
+    # get category numbers
+    counts ={}
+    for acc in dummy_accounts:
+        cat = acc["category"]
+        counts[cat] = counts.get(cat, 0) + 1
+    # print(counts)
+    print(f"Total Account: {len(dummy_accounts)}")
+    # Always sort others being last
+    sorted_counts = sorted(counts.items(), key=lambda x: x[0] == "Other")
+    for category, count in sorted_counts:
+        print(f"{category}: {count}")
+account_statistics()
     
         
         
