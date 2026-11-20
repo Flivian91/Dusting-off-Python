@@ -8,5 +8,15 @@
         "subject": "Java",
         "topic": "Strings",
         "duration": 40
+    },
+    {
+        "subject": "Java",
+        "topic": "Operators",
+        "duration": 30
+    },
+    {
+        "subject": "C++",
+        "topic": "Array",
+        "duration": 70
     }
 ]

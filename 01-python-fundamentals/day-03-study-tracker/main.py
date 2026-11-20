@@ -5,17 +5,17 @@ filename = "study_sessions.json"
 # 1. Main Menu
 def main_menu():
     print("======PERSONAL STUDY SESSION TRACKER======")
-    menu_items = ["Add study session", "view all sessions", "Search by subject", "View total study time", "Delete a session", "Exit"]
+    menu_items = ["Add study session", "view all sessions", "Search by subject", "View total study time", "Most studied session", "Delete a session", "Exit"]
     for i, item in enumerate(menu_items, start=1):
         print(f"{i}. {item}")
     try:
         menu_option = int(input("Choose an option: "))
-        if menu_option < 0 or menu_option > 6:
-            print("Please enter a number from 1 to 6")
+        if menu_option < 0 or menu_option > 7:
+            print("Please enter a number from 1 to 7")
             return None #incase the user enters 0
         return menu_option
     except ValueError:
-        print("Please enter a whole number from 1 to 6")
+        print("Please enter a whole number from 1 to 7")
         return
     
 # option = main_menu()
@@ -161,7 +161,30 @@ def delete_session():
     else:
         print("Please enter Y or N")
         
-delete_session()
+# delete_session()
+
+# Most Studied Session
+def most_studied_session():
+    print("======MOST STUDIED SESSION======")
+    # Load data
+    session_data = load_study_sessions()
+    # Load error when no available data
+    if not session_data:
+        print("No session data available")
+        return
+    time_studied = []
+    for x in session_data:
+        time_studied.append(x["duration"])
+    most_studied = max(time_studied)
+    for x in session_data:
+        if most_studied == x["duration"]:
+            print(
+                f"Subject: {x['subject']}\n"
+                f"Topic: {x['topic']}\n"
+                f"Duration: {x['duration']} minutes"
+                )
+    
+# most_studied_session()
         
 
 while True:
@@ -175,7 +198,9 @@ while True:
     elif option == 4:
         total_study_time()
     elif option == 5:
-        delete_session()
+        most_studied_session()
     elif option == 6:
+        delete_session()
+    elif option == 7:
         break
     
