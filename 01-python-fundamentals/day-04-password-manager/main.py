@@ -182,6 +182,41 @@ def update_account_data():
         return None
     
 # update_account_data()
+
+# FEATURE - 6 DELETE AN ACCOUNT
+def delete_account():
+    try:
+        account_id = int(input("Enter account ID to be deleted: "))
+        if account_id <= 0:
+            print("Account ID cannot be less than 1")
+            return
+        if account_id > len(dummy_accounts):
+            print("Account doest not exists")
+            return
+        account = dummy_accounts[account_id - 1]
+        
+        # Display the account to be deleted
+        print(
+            f"Website Name: {account['website_name']}\n"
+            f"Website URL: {account['website_url']}\n"
+            f"Username: {account['username']}\n"
+            f"Remarks: {account['remarks']}\n"
+        )
+        decide = input("Are you sure you want to delete this record?(Y/N)").lower().strip()
+        if decide in ("y", "yes"):
+            dummy_accounts.pop(account_id -1)
+            print("Account deleted successfully")
+        elif decide in ("n", "no"):
+            print("Deletion Cancled!!")
+        else:
+            print("Please enter Y or N")
+    except ValueError:
+        print("Please enter a whole number as ID number")
+        return
+delete_account()
+        
+        
+
     
 
 # Selection Block
@@ -212,5 +247,5 @@ def intial_program():
         elif option == 11:
             break
 # Intialize the program or calling the function
-intial_program()
+# intial_program()
   
