@@ -1,52 +1,6 @@
 import datetime
-from storage import load_accounts, save_account
+from storage import load_accounts, save_account, update_account, delete_account_helper
 # Complete Password Manager Prototype
-dummy_accounts = [
-    {
-        "website_name": "GitHub",
-        "website_url": "https://github.com",
-        "username": "dev_kamau",
-        "password": "P@ssw0rd123!",
-        "category": "Other",
-        "remarks": "Work repository account"
-    },
-    {
-        "website_name": "Gmail",
-        "website_url": "https://google.com",
-        "username": "wanjiku.m@gmail.com",
-        "password": "MySecretEmail#99",
-        "category": "Email",
-        "remarks": "Primary personal email"
-    },
-    {
-        "website_name": "Safaricom",
-        "website_url": "https://safaricom.co.ke",
-        "username": "0712345678",
-        "password": "SafPass2026$",
-        "category": "Utilities",
-        "remarks": "Fiber internet billing"
-    },
-    {
-        "website_name": "KRA iTax",
-        "website_url": "https://kra.go.ke",
-        "username": "A001234567Z",
-        "password": "TaxPortal#2026",
-        "category": "Email",
-        "remarks": "Annual tax returns portal"
-    },
-    {
-        "website_name": "LinkedIn",
-        "website_url": "https://linkedin.com",
-        "username": "brian.otieno@outlook.com",
-        "password": "NetWork@2026!",
-        "category": "Social",
-        "remarks": "Professional networking profile"
-    }
-]
-
-accounts = load_accounts()
-# print(accounts)
-
 # FEATURE 1 - Main Menu
 def main_menu():
     print("======WELCOME TO PASSWORD MANAGER PROTOTYPE======")
@@ -111,13 +65,11 @@ def add_account():
 # FEATURE 3 - View all Accounts
 def view_accounts():
     print("======VIEW ALL ACCOUNTS======")
-    # TODO - Load data from storage
-    if not dummy_accounts:
-        print("Account Details does not exists")
-        return None
+    # Load data 
+    accounts = load_accounts()
     print(f"No Website Name\tWebsite URL\tUsername\tRemarks")
-    for index, account in enumerate(dummy_accounts, start=1):
-        print(f"{index}. {account['website_name']}\t{account['website_url']}\t{account['username']}\t{account['remarks']}")
+    for index, account in enumerate(accounts, start=1):
+        print(f"{index}. {account['website_name']}\t{account['website_url']}\t{account['username']}\t{account['remark']}")
     
 # view_accounts()
 
@@ -125,11 +77,13 @@ def view_accounts():
 def search_by_website():
     print("======SEARCH BY WEBSITE NAME======")
     website_name = validate_input_str("Website Name")
+    # Load accounts
+    accounts = load_accounts()
     found = False
-    for x in dummy_accounts:
+    for x in accounts:
         value = x['website_name']
         if value.lower() == website_name.lower():
-            print(f"Website Name: {x['website_name']}\nWebsite URL: {x['website_url']}\nUsername: {x['username']}\nRemarks: {x['remarks']}\n")
+            print(f"Website Name: {x['website_name']}\nWebsite URL: {x['website_url']}\nUsername: {x['username']}\nRemarks: {x['remark']}\n")
             found = True
     if not found:
         print("Account with such website name doesnot exists!!")
@@ -138,12 +92,13 @@ def search_by_website():
 
 #FEATURE - 5 UPDATE AN ACCOUNT
 # Update_single_field function
-def update_single_field(field_name, account, name):
-    updated_website_name = validate_input_str(f"Updated {name}")
+def update_single_field(field_name, name, id):
+    updated_value = validate_input_str(f"Updated {name}")
     decide = input(f"Are you sure you want to update {name}?(Y/N): ").lower().strip()
     if decide in ("y", "yes"):
         # Modify
-        account[field_name] = updated_website_name
+        # account[field_name] = updated_value
+        update_account(field_name, updated_value, id)
         print(f"{name} updated successfully")
     elif decide in ("n", "no"):
         print("Update Cancled!!")
@@ -154,21 +109,23 @@ def update_account_data():
     try:
         # a. Get the user account ID
         account_id = int(input("Enter account ID to be updated: "))
-        if account_id < 0:
+        if account_id <= 0:
             print("Account ID cannot be less than 1")
             return None
-        if account_id > len(dummy_accounts):
+        # load account data
+        accounts = load_accounts()
+        if account_id > len(accounts):
             print("Account ID does not exists")
             return None
-        account =dummy_accounts[account_id - 1]
+        account =accounts[account_id - 1]
         
         # b. Display the account details to be updated
         print(
             f"Website Name: {account['website_name']}\n"
             f"Website URL: {account['website_url']}\n"
             f"Username: {account['username']}\n"
-            f"Username: {account['category']}\n"
-            f"Remarks: {account['remarks']}\n"
+            f"Category: {account['category']}\n"
+            f"Remarks: {account['remark']}\n"
         )
         # c. Provide selection menu for what to update
         print("Update Menu")
@@ -180,15 +137,15 @@ def update_account_data():
             return None
         # d. Selection block and its logic
         if update_option == 1:
-            update_single_field(field_name="website_name", account=account, name="Website Name")
+            update_single_field(field_name="website_name",  name="Website Name", id=account_id-1)
         elif update_option == 2:
-            update_single_field(field_name="website_url", account=account, name="Website URL")
+            update_single_field(field_name="website_url",  name="Website URL", id=account_id-1)
         elif update_option == 3:
-            update_single_field(field_name="username", account=account, name="Username")
+            update_single_field(field_name="username",  name="Username", id=account_id-1)
         elif update_option == 4:
-            update_single_field(field_name="password", account=account, name="Demo Password")
+            update_single_field(field_name="password",  name="Demo Password", id=account_id-1)
         elif update_option == 5:
-            update_single_field(field_name="remarks", account=account, name="Remarks")
+            update_single_field(field_name="remark",  name="Remark", id=account_id-1)
     except ValueError:
         print("Please enter a whole number as account ID")
         return None
@@ -203,10 +160,11 @@ def delete_account():
         if account_id <= 0:
             print("Account ID cannot be less than 1")
             return
-        if account_id > len(dummy_accounts):
+        accounts = load_accounts()
+        if account_id > len(accounts):
             print("Account doest not exists")
             return
-        account = dummy_accounts[account_id - 1]
+        account = accounts[account_id - 1]
         
         # Display the account to be deleted
         print(
@@ -214,11 +172,11 @@ def delete_account():
             f"Website URL: {account['website_url']}\n"
             f"Username: {account['username']}\n"
             f"Username: {account['category']}\n"
-            f"Remarks: {account['remarks']}\n"
+            f"Remarks: {account['remark']}\n"
         )
         decide = input("Are you sure you want to delete this record?(Y/N)").lower().strip()
         if decide in ("y", "yes"):
-            dummy_accounts.pop(account_id -1)
+            delete_account_helper(account_id)
             print("Account deleted successfully")
         elif decide in ("n", "no"):
             print("Deletion Cancled!!")
@@ -233,11 +191,12 @@ def delete_account():
 def search_by_username():
     print("======SEARCH ACCOUNT BY USERNAME======")
     username = validate_input_str("Username")
+    accounts = load_accounts()
     found = False
-    for x in dummy_accounts:
+    for x in accounts:
         value = x["username"]
         if value.lower() == username.lower():
-            print(f"Website Name: {x['website_name']}\nWebsite URL: {x['website_url']}\nUsername: {x['username']}\nRemarks: {x['remarks']}\n")
+            print(f"Website Name: {x['website_name']}\nWebsite URL: {x['website_url']}\nUsername: {x['username']}\nRemarks: {x['remark']}\n")
             found = True
     if not found:
         print("Account with such Username doesnot exists!!")
@@ -246,16 +205,18 @@ def search_by_username():
 # FEATURE -8 ACCOUNT STATISTICS
 def account_statistics():
     print("======ACCOUNT STATISTICS======")
+    # Load data
+    accounts = load_accounts()
     # Handle empty list
-    if not dummy_accounts:
+    if not accounts:
         print("Accounts does not exist!!")
         return
     # count the number of appearance of a category
     counts = {}
-    for acc in dummy_accounts:
+    for acc in accounts:
         cat = acc["category"]
         counts[cat] = counts.get(cat, 0) + 1
-    print(f"Total Accounts: {len(dummy_accounts)}")
+    print(f"Total Accounts: {len(accounts)}")
     # Show sorted items using lambda and force others being the last
     sorted_counts = sorted(counts.items(), key=lambda x: x[0] == "Other")
     for category, count in sorted_counts:
@@ -265,8 +226,9 @@ def account_statistics():
 # FEATURE 9 -Search by category
 def search_by_category():
     # get available categories
+    accounts = load_accounts()
     categories = {}
-    for acc in dummy_accounts:
+    for acc in accounts:
         cat = acc["category"]
         categories[cat] = categories.get(cat, 0)
     print('All categories include')
@@ -279,7 +241,7 @@ def search_by_category():
             return
         found = False
         list_category = list(categories)
-        for x in dummy_accounts:
+        for x in accounts:
             value = x["category"]
             if list_category[category_option - 1] == value:
                 print(
@@ -287,7 +249,7 @@ def search_by_category():
                     f"Website URL: {x['website_url']}\n"
                     f"Username: {x['username']}\n"
                     f"Username: {x['category']}\n"
-                    f"Remarks: {x['remarks']}\n"
+                    f"Remarks: {x['remark']}\n"
                         )
                 found = True
         if not found:
@@ -307,16 +269,19 @@ def sort_order_fun(field_name):
     sort_order_option = int(input("Choose sort order: "))
     if sort_order_option <= 0 or sort_order_option > len(sort_orders):
         print("Please enter 1 or 2")
+    # Load data
+    accounts = load_accounts()
     if sort_order_option == 1:
-        sorted_accounts = sorted(dummy_accounts, key=lambda x: x[field_name])
+        sorted_accounts = sorted(accounts, key=lambda x: x[field_name])
     else:
-        sorted_accounts = sorted(dummy_accounts, key=lambda x: x[field_name], reverse=True)
+        sorted_accounts = sorted(accounts, key=lambda x: x[field_name], reverse=True)
     return sorted_accounts
 def sort_account():
     # Sort options
     sort_menu_items = ["Website", "Username", "Category"]
     for index, item in enumerate(sort_menu_items, start=1):
         print(f"{index}. Alphabetically by {item}")
+        return None
     try:
         sort_option = int(input("Choose a sort option: "))
         if sort_option <= 0 or sort_option > len(sort_menu_items):
@@ -333,22 +298,26 @@ def sort_account():
     except ValueError:
         print(f"Please enter a whole number form 0 to {len(sort_menu_items)}")
         return
+# sort_account()
 
 # FEATURE 11: Export account report
 def export_account_report():
     print("=======Account Report======")
+    # Load data
+    accounts = load_accounts()
     filename = validate_input_str("File name")
     x = datetime.datetime.now()
     try: 
         with open(filename +".txt", "x") as f:
             f.write(f"Account report created at: {x} \n")
-            f.write(f"Total number of accounts: {len(dummy_accounts)}\n")
-            for index, account in enumerate(dummy_accounts, start=1):
+            f.write(f"Total number of accounts: {len(accounts)}\n")
+            for index, account in enumerate(accounts, start=1):
                 f.write(f"{index}\t|{account['website_name']}\t|{account['username']}\t|{account['category']}\n")
             print("Report created successfully")
     except FileExistsError:
         print("File already exists, change file name")
         return
+# export_account_report()
 # Selection Block
 def intial_program():
     while True:
@@ -376,5 +345,4 @@ def intial_program():
         elif option == 11:
             break
 # Intialize the program or calling the function
-intial_program()
-  
+intial_program()  

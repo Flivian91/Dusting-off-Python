@@ -8,6 +8,9 @@ def load_accounts():
             accounts = json.load(file)
             if not isinstance(accounts, list):
                 raise ValueError("Accounts must be a list")
+            if not accounts:
+                print("No available account!!")
+                return []
             return accounts
     except ValueError:
         print("Accounts must be a list")
@@ -28,4 +31,17 @@ def save_account(data):
         json.dump(accounts, f, indent=4)
     print("Account added successfuly")
     
+# Update account
+def update_account(field_name, updated_value, id):
+    accounts = load_accounts()
+    account = accounts[id]
+    account[field_name] = updated_value
+    with open(filename, "w") as f:
+        json.dump(accounts, f, indent=4)
+# Delete account
+def delete_account_helper(id):
+    accounts = load_accounts()
+    accounts.pop(id - 1)
+    with open(filename, "w") as f:
+        json.dump(accounts, f, indent=4)
     
