@@ -1,3 +1,4 @@
+import datetime
 # Complete Password Manager Prototype
 dummy_accounts = [
     {
@@ -17,7 +18,7 @@ dummy_accounts = [
         "remarks": "Primary personal email"
     },
     {
-        "website_name": "Safaricom Portal",
+        "website_name": "Safaricom",
         "website_url": "https://safaricom.co.ke",
         "username": "0712345678",
         "password": "SafPass2026$",
@@ -333,8 +334,20 @@ def sort_account():
         return
 
 # FEATURE 11: Export account report
-    
-        
+def export_account_report():
+    print("=======Account Report======")
+    filename = validate_input_str("File name")
+    x = datetime.datetime.now()
+    try: 
+        with open(filename +".txt", "x") as f:
+            f.write(f"Account report created at: {x} \n")
+            f.write(f"Total number of accounts: {len(dummy_accounts)}\n")
+            for index, account in enumerate(dummy_accounts, start=1):
+                f.write(f"{index}\t|{account['website_name']}\t|{account['username']}\t|{account['category']}\n")
+            print("Report created successfully")
+    except FileExistsError:
+        print("File already exists, change file name")
+        return
 # Selection Block
 def intial_program():
     while True:
@@ -358,9 +371,9 @@ def intial_program():
         elif option == 9:
             sort_account()
         elif option == 10:
-            pass
+            export_account_report()
         elif option == 11:
             break
 # Intialize the program or calling the function
-# intial_program()
+intial_program()
   
