@@ -1,4 +1,5 @@
 import datetime
+from storage import load_accounts, save_account
 # Complete Password Manager Prototype
 dummy_accounts = [
     {
@@ -43,6 +44,8 @@ dummy_accounts = [
     }
 ]
 
+accounts = load_accounts()
+# print(accounts)
 
 # FEATURE 1 - Main Menu
 def main_menu():
@@ -102,9 +105,7 @@ def add_account():
     remarks = validate_input_str("Remarks")
     
     user_account_data = {"website_name": website_name, "website_url": website_url, "username": username, "password": demo_password, "category": account_category, "remark": remarks}
-    print(user_account_data)
-    # TODO : Append the dict to the list
-    # TODO : Store the list in a file
+    save_account(user_account_data)
 # add_account()
 
 # FEATURE 3 - View all Accounts
