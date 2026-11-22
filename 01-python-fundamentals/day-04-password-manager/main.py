@@ -296,9 +296,42 @@ def search_by_category():
         return
 # search_by_category()
 
-# FEATURE 9 - SORT ACCOUNTS
+# FEATURE 10 - SORT ACCOUNTS
+# Sort order logic
+def sort_order_fun(field_name):
+    sort_orders = ["Ascending", "Descending"]
+    for i, item in enumerate(sort_orders, start=1):
+        print(f"{i}. {item}")
+    sort_order_option = int(input("Choose sort order: "))
+    if sort_order_option <= 0 or sort_order_option > len(sort_orders):
+        print("Please enter 1 or 2")
+    if sort_order_option == 1:
+        sorted_accounts = sorted(dummy_accounts, key=lambda x: x[field_name])
+    else:
+        sorted_accounts = sorted(dummy_accounts, key=lambda x: x[field_name], reverse=True)
+    return sorted_accounts
 def sort_account():
-    pass
+    # Sort options
+    sort_menu_items = ["Website", "Username", "Category"]
+    for index, item in enumerate(sort_menu_items, start=1):
+        print(f"{index}. Alphabetically by {item}")
+    try:
+        sort_option = int(input("Choose a sort option: "))
+        if sort_option <= 0 or sort_option > len(sort_menu_items):
+            print(f"Please enter a value form 0 to {len(sort_menu_items)}")
+            return
+        # Sort by Website name
+        if sort_option == 1:
+           sorted_accounts = sort_order_fun("website_name")
+        elif sort_option == 2:
+            sorted_accounts = sort_order_fun("username")
+        elif sort_option == 3:
+            sorted_accounts = sort_order_fun("category")
+        print(sorted_accounts)
+    except ValueError:
+        print(f"Please enter a whole number form 0 to {len(sort_menu_items)}")
+        return
+sort_account()
     
         
 # Selection Block
