@@ -331,7 +331,8 @@ def sort_account():
     except ValueError:
         print(f"Please enter a whole number form 0 to {len(sort_menu_items)}")
         return
-sort_account()
+
+# FEATURE 11: Export account report
     
         
 # Selection Block
@@ -355,10 +356,9 @@ def intial_program():
         elif option == 8:
             search_by_category()
         elif option == 9:
-            pass
+            sort_account()
         elif option == 10:
             pass
-            break
         elif option == 11:
             break
 # Intialize the program or calling the function
