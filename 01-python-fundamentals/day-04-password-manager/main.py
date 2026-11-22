@@ -67,6 +67,7 @@ def validate_input_str(input_name):
         print(f"Please {input_name} cannot be empty!!")
         return
     return user_input
+# Basic url check
 def basic_url_check(url):
     # 1. Check that it starts with http:// or https://
     has_protocol = url.startswith(("http://", "https://"))
@@ -80,7 +81,6 @@ def add_account():
     print("======ADD A NEW ACCOUNT======")
     website_name = validate_input_str("Website Name")
     website_url = validate_input_str("Website URL(eg 'https://www.mywebsite.com')")
-    # basic url check using lambda function
     is_valid = basic_url_check(website_url)
     if not is_valid:
         print("Website URL is invalid")
@@ -301,10 +301,6 @@ def sort_account():
     pass
     
         
-        
-
-    
-
 # Selection Block
 def intial_program():
     while True:
