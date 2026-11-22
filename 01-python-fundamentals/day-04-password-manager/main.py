@@ -23,7 +23,7 @@ def validate_input_str(input_name):
     user_input = input(f"Enter {input_name}: ").strip()
     if not user_input.strip():
         print(f"Please {input_name} cannot be empty!!")
-        return
+        return None
     return user_input
 # Basic url check
 def basic_url_check(url):
@@ -51,15 +51,18 @@ def add_account():
     print("Available Categories")
     for i, category in enumerate(categories, start=1):
         print(f"{i}. {category}")
-    category_option = int(input('Choose account category (1-4): ')) 
-    if category_option <=0 or category_option > len(categories):
-        print(f"Please enter a value more than 1 and less than {len(categories)}")
-        return
-    account_category = categories[category_option - 1]
-    remarks = validate_input_str("Remarks")
-    
-    user_account_data = {"website_name": website_name, "website_url": website_url, "username": username, "password": demo_password, "category": account_category, "remark": remarks}
-    save_account(user_account_data)
+    try:
+        category_option = int(input('Choose account category (1-4): ')) 
+        if category_option <=0 or category_option > len(categories):
+            print(f"Please enter a value more than 1 and less than {len(categories)}")
+            return
+        account_category = categories[category_option - 1]
+        remarks = validate_input_str("Remarks")
+        
+        user_account_data = {"website_name": website_name, "website_url": website_url, "username": username, "password": demo_password, "category": account_category, "remark": remarks}
+        save_account(user_account_data)
+    except ValueError:
+        print(f"Please enter a whole number from 1 to {len(categories)}")
 # add_account()
 
 # FEATURE 3 - View all Accounts
@@ -67,7 +70,10 @@ def view_accounts():
     print("======VIEW ALL ACCOUNTS======")
     # Load data 
     accounts = load_accounts()
-    print(f"No Website Name\tWebsite URL\tUsername\tRemarks")
+    if not accounts:
+        print("No account available!!")
+        return 
+    print(f"No\t Website Name\tWebsite URL\tUsername\tRemarks")
     for index, account in enumerate(accounts, start=1):
         print(f"{index}. {account['website_name']}\t{account['website_url']}\t{account['username']}\t{account['remark']}")
     
@@ -145,6 +151,8 @@ def update_account_data():
         elif update_option == 4:
             update_single_field(field_name="password",  name="Demo Password", id=account_id-1)
         elif update_option == 5:
+            update_single_field(field_name="category",  name="Category", id=account_id-1)
+        elif update_option == 6:
             update_single_field(field_name="remark",  name="Remark", id=account_id-1)
     except ValueError:
         print("Please enter a whole number as account ID")
@@ -171,7 +179,7 @@ def delete_account():
             f"Website Name: {account['website_name']}\n"
             f"Website URL: {account['website_url']}\n"
             f"Username: {account['username']}\n"
-            f"Username: {account['category']}\n"
+            f"Category: {account['category']}\n"
             f"Remarks: {account['remark']}\n"
         )
         decide = input("Are you sure you want to delete this record?(Y/N)").lower().strip()
@@ -230,7 +238,7 @@ def search_by_category():
     categories = {}
     for acc in accounts:
         cat = acc["category"]
-        categories[cat] = categories.get(cat, 0)
+        categories[cat] = categories.get(cat, 0) + 1
     print('All categories include')
     for index, x in enumerate(categories.keys(), start=1):
         print(f"{index}. {x}")
@@ -281,7 +289,6 @@ def sort_account():
     sort_menu_items = ["Website", "Username", "Category"]
     for index, item in enumerate(sort_menu_items, start=1):
         print(f"{index}. Alphabetically by {item}")
-        return None
     try:
         sort_option = int(input("Choose a sort option: "))
         if sort_option <= 0 or sort_option > len(sort_menu_items):

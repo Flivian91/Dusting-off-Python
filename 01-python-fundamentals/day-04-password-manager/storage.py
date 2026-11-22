@@ -14,7 +14,7 @@ def load_accounts():
             return accounts
     except ValueError:
         print("Accounts must be a list")
-        return
+        return []
     except FileNotFoundError:
         return []
     except json.JSONDecodeError:
@@ -25,6 +25,9 @@ def save_account(data):
     # load data
     accounts = load_accounts()
     # add new data
+    if accounts is None:
+        print("Cannot save because account data could not be loaded.")
+        return
     accounts.append(data)
     # write the data in json file
     with open(filename, "w") as f:
