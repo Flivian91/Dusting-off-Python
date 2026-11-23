@@ -8,7 +8,7 @@ The project help the learner add, view, search compute total time taken to learn
 - Advance input validation and data cleaning
 - Error handling in file
 - Usage of built in functions like enumerate(), divmod()
--Thinking like a programmer.
+- Thinking like a programmer.
 # How to run the project
 1. Open the terminal
 2. Navigate to the working directory using cd , where the main.py is located on day-02-expense-tracker
