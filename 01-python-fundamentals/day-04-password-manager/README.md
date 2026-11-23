@@ -21,5 +21,5 @@ The project help individuals to save there accounts credentials, Incase they for
 - Thinking like a programmer.
 # How to run the project
 1. Open the terminal
-2. Navigate to the working directory using cd , where the main.py is located on day-02-expense-tracker
+2. Navigate to the working directory using cd , where the main.py is located on day-04-passoword manager
 3. On the terminal run `python main.py`
