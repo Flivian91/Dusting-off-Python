@@ -1,4 +1,4 @@
-# Concept Learnt on advanced function 
+# Lesson 1 -- advanced function 
 
 # Exercise 1. Default paramenters
 # Create a function called calculate_price(price, tax=0.16) that returns the price including tax.
@@ -40,9 +40,10 @@ def create_report(title, *scores, **details):
     print(f"Report: {title}")
     if not scores:
         print("No scores provided")
-    # calculate and display average score
-    average_score = round(sum(scores) / len(scores), 1)
-    print(f"Average Score: {average_score}\n")
+    else:
+        # calculate and display average score
+        average_score = round(sum(scores) / len(scores), 1)
+        print(f"Average Score: {average_score}\n")
     # additional details
     print("Additional Details:")
     for key, value in details.items():
