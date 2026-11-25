@@ -1,11 +1,18 @@
 # Lesson 2 -- Comprehensions and advanced collections
 
 # Exercise 1. List comprehension
+# Method-1
 prices = [100, 200, 300, 400, 500]
-discounted_prices = [x * (1- 0.1) for x in prices]
+discounted_prices = [price * (1- 0.1) for price in prices]
 # print(discounted_prices)
+# Method -2
+discounted_prices_older = []
+for price in prices:
+    discounted_prices_older.append(price * (1 - 0.1))
+# print(discounted_prices_older)
 
 # Exercise 2 — Filtering product records
+# Method - 1
 products = [
     {"name": "Laptop", "price": 800, "stock": 5},
     {"name": "Mouse", "price": 20, "stock": 0},
@@ -15,8 +22,15 @@ products = [
 ]
 available_products = [product for product in products if product['stock'] > 0]
 # print(available_products)
+# Method - 2
+available_products_older = []
+for product in products:
+    if product["stock"] > 0:
+        available_products_older.append(product)
+# print(available_products_older)
 
 # Exercise 3 - Conditional expression
+# Method - 1
 students = [
     {"name": "Alex", "score": 85},
     {"name": "John", "score": 42},
@@ -24,10 +38,15 @@ students = [
     {"name": "David", "score": 35},
     {"name": "Sarah", "score": 90}
 ]
-student_results = ["Pass" if score["score"] >= 50 else "Fail" for score in students]
+student_results = ["Pass" if student["score"] >= 50 else "Fail" for student in students]
 # print(student_results)
-
+# Method - 2
+student_results_older = []
+for student in students:
+    student_results_older.append("Pass" if student["score"] >= 50 else "Fail")
+# print(student_results_older)
 # Exercise 4 — Dictionary comprehensions
+# Method - 1
 users = [
     {"id": 101, "name": "Alex"},
     {"id": 102, "name": "John"},
@@ -36,6 +55,13 @@ users = [
 ]
 user_lookup = {user['id']: user["name"] for user in users}
 # print(user_lookup)
+# Method - 2
+user_lookup_older = {}
+for user in users:
+    # use any of 2 formats below
+    user_lookup_older.update({user["id"]: user["name"]})
+    # user_lookup_older[user["id"]] = user["name"]
+# print(user_lookup_older)
 # Backend connection: This pattern is useful when building lookup tables, mapping database records by ID, and transforming API responses.
 # 1. Raw data from two separate API endpoints or database tables
 customers = [
@@ -90,10 +116,10 @@ warehouse_stock = [
     [5, 10, 15]
 ]
 all_stocks = [item for stock in warehouse_stock for item in stock]
-print(all_stocks)
+# print(all_stocks)
 # methond_2
 all_stocks_older = []
 for stock in warehouse_stock:
     for item in stock:
         all_stocks_older.append(item)
-print(all_stocks_older)
+# print(all_stocks_older)
