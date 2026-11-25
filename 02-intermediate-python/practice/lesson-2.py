@@ -123,3 +123,54 @@ for stock in warehouse_stock:
     for item in stock:
         all_stocks_older.append(item)
 # print(all_stocks_older)
+
+# Python Transformation tools (map(), filter() and zip())
+#01 - map() - applies a function to every item in an iterable
+# Example
+prices = [100, 200, 300, 400]
+def add_tax(price):
+    return price * 1.16
+
+taxed_prices = list(map(lambda price : price * 1.16, prices))
+# print(taxed_prices)
+
+# Exercise 7 - map()
+prices = [100, 200, 300, 400, 500]
+def discount_price(price):
+    return price * (1 - 0.15)
+discounted_prices = list(map(lambda price: price * (1 - 0.15), prices))
+# print(discounted_prices)
+
+# 02: filter() - Selects items from an iterable based on a condition.
+# Example
+prices = [50, 120, 250, 80, 400]
+def check_expensive_products(price):
+    if(price > 100):
+        return price
+expensive_products = list(filter(lambda price: price > 100, prices))
+# print(expensive_products)
+
+# Exercise 8 - Filter()
+users = [
+    {"name": "Alex", "age": 17},
+    {"name": "John", "age": 24},
+    {"name": "Mary", "age": 19},
+    {"name": "David", "age": 15},
+    {"name": "Sarah", "age": 28}
+]
+adults = list(filter(lambda user: user["age"] >= 18, users))
+# print(adults)
+
+# 03: zip() - combines corresponding items from two or more iterables
+names = ["Alex", "John", "Mary"]
+ages = [20, 25, 19]
+
+users = list(zip(names, ages))
+# print(users)
+
+# Exercise 8 - zip()
+product_names = ["Laptop", "Mouse", "Keyboard", "Monitor"]
+prices = [800, 20, 50, 300]
+
+products = dict(zip(product_names, prices))
+print(products)
