@@ -173,4 +173,21 @@ product_names = ["Laptop", "Mouse", "Keyboard", "Monitor"]
 prices = [800, 20, 50, 300]
 
 products = dict(zip(product_names, prices))
-print(products)
+# print(products)
+
+# Final Coding challenge- Backend data processing
+products = [
+    {"id": 1, "name": "Laptop", "price": 800, "stock": 5},
+    {"id": 2, "name": "Mouse", "price": 20, "stock": 0},
+    {"id": 3, "name": "Keyboard", "price": 50, "stock": 12},
+    {"id": 4, "name": "Monitor", "price": 300, "stock": 3},
+    {"id": 5, "name": "Headphones", "price": 100, "stock": 0}
+]
+# Task 1: Select product which stock is greater the zero
+available_products = list(filter(lambda product: product['stock'] > 0, products))
+# print(available_products)
+# Task 2: Extrack available products
+available_products_names = list(map(lambda product: product['name'], available_products))
+# print(available_products_names)
+available_product_stats = { product['name']: product['price'] for product in available_products}
+# print(available_product_stats)
