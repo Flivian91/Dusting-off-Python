@@ -12,4 +12,16 @@ products = [
     {"name": "Headphones", "price": 100, "stock": 0}
 ]
 available_products = [product for product in products if product['stock'] > 0]
-print(available_products)
+# print(available_products)
+# Exercise 3 - Conditional expression
+students = [
+    {"name": "Alex", "score": 85},
+    {"name": "John", "score": 42},
+    {"name": "Mary", "score": 67},
+    {"name": "David", "score": 35},
+    {"name": "Sarah", "score": 90}
+]
+student_results = ["Pass" if score["score"] >= 50 else "Fail" for score in students]
+# print(student_results)
+
+# Exercise 4 — Dictionary comprehensions
