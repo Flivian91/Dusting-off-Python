@@ -9,10 +9,17 @@
 # self -refers to the current instance of the class
 # Attributes represents an object`s data while methods represents its behaviour
 class Product:
+    # Class attributes
+    currency = "KES"
+    tax_rate = 0.16
+    total_products = 0
     def __init__(self, name, price, stock): #automatically runs when the object is created
+        # Instance attributes and they belong to individual object
         self.name = name
         self.price = price
         self.stock = stock
+        # Increments the total products when a new object is created
+        Product.total_products += 1
     def display_info(self):
         return f"{self.name} | Price: {self.price} | Stock: {self.stock}"
     def calculate_value(self):
@@ -23,6 +30,7 @@ class Product:
 # creating object
 p1 = Product("Laptop", 800, 5)
 p2 = Product("Mouse", 20, 12)
+p3 = Product("Mouse", 20, 12)
 # storing object in a list
 products = [
     Product("Laptop", 800, 5),
@@ -34,7 +42,7 @@ products = [
 available_products = [
     product for product in products if product.is_available()
 ]
-print(available_products)
+# print(available_products)
 
 product_names = list(map(lambda product: product.name, products))
 print(product_names)
@@ -49,3 +57,21 @@ total_value = [product.calculate_value() for product in products]
 # Implemented on day-01 of OPP
 
 # PART- 2: Instance and class attributes
+# Accessing class instance
+# print(p1.currency)
+# Modifying class instance
+# Product.currency = "USD"
+# # print(p1.currency)
+# print(p2.currency)
+
+# Attribute shadowing
+# p1.currency = "EUR"
+# print(p1.currency) #has changed its object only
+# print(p2.currency)
+# print(Product.currency)
+# 
+# Tracking objects using class attributes
+# Product.total_products += 1 # Increments counter
+# print(Product.total_products)
+
+# Avoid using class attributes with list or dictionaries
