@@ -37,3 +37,63 @@ users = [
 user_lookup = {user['id']: user["name"] for user in users}
 # print(user_lookup)
 # Backend connection: This pattern is useful when building lookup tables, mapping database records by ID, and transforming API responses.
+# 1. Raw data from two separate API endpoints or database tables
+customers = [
+    {"user_id": "USR-101", "name": "Wanjiku Mwangi", "phone": "+254712345678"},
+    {"user_id": "USR-102", "name": "Otieno Odhiambo", "phone": "+254723456789"},
+    {"user_id": "USR-103", "name": "Fatuma Hassan", "phone": "+254734567890"},
+    {"user_id": "USR-104"},
+]
+
+transactions = [
+    {"tx_id": "TXN-9001", "user_id": "USR-102", "amount_kes": 1500},
+    {"tx_id": "TXN-9002", "user_id": "USR-101", "amount_kes": 450},
+    {"tx_id": "TXN-9003", "user_id": "USR-999", "amount_kes": 2200}, # Unknown user
+]
+
+# 2. Build the lookup table (O(n) time - runs only once)
+customer_lookup = {c["user_id"]: c for c in customers}
+
+
+# 3. Transform/enrich transactions using instant O(1) lookups
+enriched_receipts = []
+
+for tx in transactions:
+    # .get() safely returns a fallback dictionary if the user_id isn't found
+    customer = customer_lookup.get(tx["user_id"], {"name": "Unknown Customer", "phone": "N/A"})
+    
+    enriched_receipts.append({
+        "receipt_no": tx["tx_id"],
+        "customer_name": customer["name"],
+        "phone": customer["phone"],
+        "amount": f"KES {tx['amount_kes']:,}"
+    })
+
+# Exercise 5 — Set comprehensions
+emails = [
+    "alex@gmail.com",
+    "john@yahoo.com",
+    "mary@gmail.com",
+    "david@outlook.com",
+    "sarah@yahoo.com",
+    "peter@gmail.com"
+]
+email_domains = {domain.split("@")[1] for domain in emails}
+# print(email_domains)
+# Backend connection: This is useful for analysing user registration data, grouping users by email provider, and processing records.
+
+# Exercise 6 — Nested list comprehensions
+# method_1
+warehouse_stock = [
+    [10, 20, 30],
+    [15, 25, 35],
+    [5, 10, 15]
+]
+all_stocks = [item for stock in warehouse_stock for item in stock]
+print(all_stocks)
+# methond_2
+all_stocks_older = []
+for stock in warehouse_stock:
+    for item in stock:
+        all_stocks_older.append(item)
+print(all_stocks_older)
